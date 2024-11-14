@@ -1,0 +1,94 @@
+<!-- 
+Archivo: /D:/Users/USER/Documents/GitHub/CotizacionSoftware/templates/versiones_cotizacion.html
+
+Descripción:
+Este archivo HTML muestra la página de versiones de cotización. Proporciona información sobre la versión actual de la cotización, así como las versiones padre e hijas asociadas. También incluye enlaces para ver los detalles de cada cotización.
+
+Estructura del archivo:
+- La página comienza con la declaración del tipo de documento y el idioma.
+- A continuación, se establecen las metaetiquetas para la codificación de caracteres y la escala de visualización.
+- El título de la página se establece como "Versiones de Cotización".
+- Se enlaza una hoja de estilos externa llamada "styles.css".
+- El contenido principal de la página se encuentra dentro de las etiquetas <body>.
+- El encabezado contiene un título que muestra el ID de la cotización actual.
+- El contenido principal está dividido en tres secciones: "Versión Actual", "Versiones Padre" y "Versiones Hijas".
+- En la sección "Versión Actual", se muestra información detallada sobre la cotización actual, como el ID, el consecutivo, la fecha, la ciudad, la empresa y el proyecto.
+- Se proporciona un enlace para ver los detalles completos de la cotización actual.
+- Si existen versiones padre asociadas a la cotización actual, se muestra la sección "Versiones Padre" con una lista de las versiones padre y enlaces para ver los detalles de cada una.
+- Si existen versiones hijas asociadas a la cotización actual, se muestra la sección "Versiones Hijas" con una lista de las versiones hijas y enlaces para ver los detalles de cada una.
+- Si no hay versiones hijas para la cotización actual, se muestra un mensaje indicando que no hay versiones hijas disponibles.
+- Al final de la página, se proporciona un enlace para volver a la lista de cotizaciones.
+- El pie de página contiene un enlace para volver a la página de inicio.
+
+Uso de plantillas:
+- El archivo utiliza plantillas de Flask para generar dinámicamente los valores de las variables, como el ID, el consecutivo, la fecha, etc.
+- Los enlaces utilizan la función "url_for" de Flask para generar las URL de forma dinámica.
+
+Notas adicionales:
+- Este archivo forma parte de un proyecto llamado "CotizacionSoftware" ubicado en la ruta "/D:/Users/USER/Documents/GitHub/".
+- Se utiliza una hoja de estilos externa llamada "styles.css" para aplicar estilos a la página.
+- La página está escrita en español (idioma: es).
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Versiones de Cotización</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Versiones de Cotización {{ cotizacion.id }}</h1>
+    </header>
+    <main class="versions-container">
+        <h2>Versión Actual</h2>
+        <ul>
+            <li><strong>ID:</strong> {{ cotizacion.id }}</li>
+            <li><strong>Consecutivo:</strong> {{ cotizacion.consecutivo }}</li>
+            <li><strong>Fecha:</strong> {{ cotizacion.fecha }}</li>
+            <li><strong>Ciudad:</strong> {{ cotizacion.ciudad }}</li>
+            <li><strong>Empresa:</strong> {{ cotizacion.empresa }}</li>
+            <li><strong>Proyecto:</strong> {{ cotizacion.proyecto }}</li>
+            <!-- Otros atributos relevantes -->
+            <li><a href="{{ url_for('ver_cotizacion', id=cotizacion.id) }}">Ver detalles</a></li>
+        </ul>
+
+        {% if padres %}
+        <h2>Versiones Padre</h2>
+        <ul>
+            {% for padre in padres %}
+            <li>
+                <strong>ID:</strong> {{ padre.id }} |
+                <strong>Consecutivo:</strong> {{ padre.consecutivo }} |
+                <strong>Fecha:</strong> {{ padre.fecha }} |
+                <a href="{{ url_for('ver_cotizacion', id=padre.id) }}">Ver detalles</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if versiones %}
+        <h2>Versiones Hijas</h2>
+        <ul>
+            {% for version in versiones %}
+            <li>
+                <strong>ID:</strong> {{ version.id }} |
+                <strong>Consecutivo:</strong> {{ version.consecutivo }} |
+                <strong>Fecha:</strong> {{ version.fecha }} |
+                <a href="{{ url_for('ver_cotizacion', id=version.id) }}">Ver detalles</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No hay versiones hijas para esta cotización.</p>
+        {% endif %}
+
+        <a href="{{ url_for('listar_cotizaciones') }}" class="btn">Volver a la lista de cotizaciones</a>
+    </main>
+    <footer>
+        <a href="/" class="support-link">Volver al Inicio</a>
+    </footer>
+</body>
+</html>
+

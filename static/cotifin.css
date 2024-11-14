@@ -1,0 +1,81 @@
+/* styles.css */
+body {
+    font-family: 'Roboto', sans-serif; /* Fuente Roboto */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Fondo claro para contraste */
+    color: #333; /* Texto oscuro */
+    font-size: 28px; /* Tamaño de letra más grande */
+    line-height: 1.6; /* Mejora la legibilidad */
+}
+
+.header img {
+    width: 100%;
+    height: auto;
+}
+
+.content {
+    padding: 20px;
+    background-color: #fff; /* Fondo blanco para el contenido */
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif; /* Fuente Roboto para encabezados */
+    font-weight: 700; /* Negrita para encabezados */
+}
+
+p {
+    font-weight: 400; /* Peso normal para párrafos */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px; /* Tamaño de letra más grande para la tabla */
+}
+
+th, td {
+    border: 1px solid #ccc; /* Bordes de tabla en gris */
+    padding: 12px; /* Aumentar el padding */
+    text-align: left;
+}
+
+th {
+    background-color: #444; /* Encabezado en gris oscuro */
+    color: #fff; /* Texto blanco */
+    font-weight: 700; /* Negrita para encabezados */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Filas alternas en gris claro */
+}
+
+.signature {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px; /* Tamaño de letra más grande para la firma */
+}
+
+.footer {
+    background-color: #444; /* Fondo del pie de página en gris oscuro */
+    color: #fff; /* Texto blanco */
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-size: 18px; /* Tamaño de letra más grande para el pie de página */
+}
+
+.support-link {
+    color: #007bff; /* Color para el enlace */
+    text-decoration: none;
+}
+
+.support-link:hover {
+    text-decoration: underline; /* Subrayado al pasar el ratón */
+}

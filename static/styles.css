@@ -1,0 +1,534 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #f17d2f; 
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header .logo {
+    height: 150px;
+}
+
+h1 {
+    margin: 10px 0 0;
+    font-size: 2rem;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 1200px;
+}
+
+.section {
+    width: 30%;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 8px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #f17d2f; 
+}
+
+p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.btn {
+    display: block;
+    margin: 15px 0;
+    padding: 10px 15px;
+    background-color: #f17d2f; 
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #d25e1f; /* Un poco más oscuro al pasar el mouse */
+}
+
+footer {
+    background-color: #f17d2f; 
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.support-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.support-link:hover {
+    text-decoration: underline;
+}
+
+/* ====> create_quote.html */
+
+.consignation-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #f17d2f;
+}
+
+.form-group input {
+    width: 97%;
+    padding: 8px;
+    border: 0.3px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 0.3px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button.btn {
+    width: 100%;
+    padding: 10px; 
+    font-size: 1rem;
+    background-color: #f17d2f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btn:hover {
+    background-color: #d25e1f;
+}
+
+/* Estilos adicionales para la presentación condicional de campos */
+
+#additional-fields {
+    margin-top: 20px;
+}
+
+.form-group #producto-group,
+.form-group #servicio-group {
+    display: none; 
+}
+
+
+/* ====> Estilos adicionales para la página de Versiones de Cotización */
+
+/* Estilo general para contenedores en la página de Versiones de Cotización */
+.versions-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos específicos para la página */
+.versions-container h1, .versions-container h2 {
+    color: #f17d2f;
+    text-align: center;
+}
+
+/* Estilo para listas en la página de Versiones de Cotización */
+.versions-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.versions-container ul li {
+    background-color: #f4f4f4;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.versions-container ul li strong {
+    color: #333;
+}
+
+/* Estilo para los enlaces dentro de las listas */
+.versions-container ul li a {
+    color: #f17d2f;
+    text-decoration: none;
+    font-weight: 600;
+    float: right;
+}
+
+.versions-container ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para el botón de "Volver a la lista de cotizaciones" */
+.versions-container .btn {
+    display: inline-block;
+    margin: 15px auto;
+    padding: 10px 20px;
+    background-color: #f17d2f;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.versions-container .btn:hover {
+    background-color: #d25e1f;
+}
+
+/* ====> Estilos adicionales para la página de Modificar Cotización */
+
+/* Contenedor general */
+.modify-quote-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modify-quote-container h1 {
+    color: #f17d2f;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilo para los formularios */
+.modify-quote-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modify-quote-container label {
+    margin-bottom: 5px;
+    color: #f17d2f;
+    font-weight: 600;
+}
+
+.modify-quote-container input[type="text"] {
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Botón de guardar cambios */
+.modify-quote-container button[type="submit"] {
+    padding: 10px;
+    background-color: #f17d2f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modify-quote-container button[type="submit"]:hover {
+    background-color: #d25e1f;
+}
+
+/* Enlace para volver a ver la cotización */
+.modify-quote-container a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #f17d2f;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+}
+
+.modify-quote-container a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos adicionales para la página de soporte */
+
+/* Contenedor principal para la página de soporte */
+.support-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para las secciones de contacto y FAQ */
+.contact-section, .faq-section {
+    margin-bottom: 30px;
+}
+
+.contact-section h2, .faq-section h2 {
+    color: #f17d2f;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin: 10px 0;
+    color: #333;
+}
+
+.contact-info a {
+    color: #f17d2f;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para los elementos FAQ */
+.faq-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-left: 4px solid #f17d2f;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.faq-item h3 {
+    color: #f17d2f;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.faq-item p {
+    color: #555;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* ===> lista_documentos.css <=== */
+.document-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.document-item {
+    background-color: #f4f4f4;
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.document-link {
+    color: #f17d2f;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.document-link:hover {
+    color: #d25e1f;
+    text-decoration: underline;
+}
+
+/* Extra Styles for Upload Document Form */
+
+/* Center the entire form and ensure alignment with the rest of the page */
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 600px; /* Matches other form containers on the site */
+    padding: 30px;
+    background-color: #ffffff; /* Consistent white background */
+    border-radius: 10px; /* Consistent rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for modern look */
+}
+
+/* Refined title styling to be consistent with other page sections */
+/* Title styling without background box and with orange text */
+.upload-container h2 {
+    font-size: 2.2rem; /* Consistent heading size */
+    color: #f17d2f; /* Orange color for the title text */
+    font-weight: 600; /* Consistent weight */
+    margin-bottom: 20px;
+    text-shadow: none; /* Remove text shadow */
+    letter-spacing: 1px; /* Subtle letter spacing for a modern look */
+    text-transform: uppercase; /* Capitalized for consistency */
+}
+
+
+/* Consistent form field styling */
+.upload-container .form-group label {
+    font-size: 1.1rem;
+    font-weight: 600; /* Aligns with label styles across the site */
+    color: #f17d2f; /* Consistent label color */
+    margin-bottom: 8px;
+    display: block;
+    text-align: left;
+}
+
+.upload-container .form-control-file,
+.upload-container .form-control {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    font-size: 1.1rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition on focus */
+}
+
+/* Focus effect to align with rest of form styles */
+.upload-container .form-control-file:focus,
+.upload-container .form-control:focus {
+    outline: none;
+    border-color: #ff8c00; /* Consistent focus border color */
+    box-shadow: 0 0 5px rgba(255, 140, 0, 0.5); /* Orange shadow on focus */
+}
+
+/* Submit button styling to match the site's buttons */
+.upload-container .btn-primary {
+    background-color: #ff8c00; /* Bright orange like other buttons */
+    border-color: #e67e22;
+    color: white;
+    font-size: 1.1rem;
+    padding: 12px 30px;
+    font-weight: 600; /* Consistent button font weight */
+    border-radius: 8px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transitions */
+}
+
+/* Button hover effect for consistency */
+.upload-container .btn-primary:hover {
+    background-color: #e67e22; /* Slightly darker orange on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+}
+
+/* Flash messages styling to match the alert style across the site */
+.upload-container .alert {
+    font-size: 1rem;
+    padding: 14px;
+    font-weight: 600;
+    background-color: #ff8c00; /* Bright orange background */
+    border-color: #e67e22;
+    color: white;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* Soft shadow for consistency */
+}
+
+/* Responsive adjustments for smaller devices */
+@media (max-width: 768px) {
+    .upload-container {
+        max-width: 90%; /* Responsive width */
+        padding: 20px; /* Smaller padding on mobile */
+    }
+
+    .upload-container h2 {
+        font-size: 2rem; /* Adjusted title size for smaller screens */
+    }
+
+    .upload-container .btn-primary {
+        font-size: 1rem; /* Smaller button text size for mobile */
+    }
+}
+
+/* Estilos para la sección de usuario */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-email {
+    font-size: 16px;
+    color: #fff;
+}
+
+
+.login-btn {
+    justify-content: center;
+    flex-direction: row;
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    padding: 10px;
+    box-shadow: 3px 3px 3px rgb(170, 170, 170);
+    border-radius: 15px;
+}
+.btn-text {
+    justify-content: center;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    color: rgb(85, 85, 85);
+}
+
+
+
+
+
+
+
+
+
+
+

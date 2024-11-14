@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Documento</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container mt-5 upload-container">
+        <h2 class="mb-4 text-center">Subir Documento</h2>
+        <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data" onsubmit="return validarArchivo()">
+            <div class="form-group">
+                <label for="documento">Selecciona un documento:</label>
+                <input type="file" class="form-control-file" id="documento" name="documento" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cotizacion">Asociar a un proyecto:</label>
+                <select class="form-control" id="cotizacion" name="cotizacion" required>
+                    {% for cotizacion in cotizaciones %}
+                        <option value="{{ cotizacion.id }}">{{ cotizacion.proyecto }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Subir Documento</button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mt-3" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <footer class="text-center mt-5">
+        <a href="/" class="support-link">Volver al Inicio</a>
+    </footer>
+
+    <!-- Script de validación de archivo y alertas -->
+    <script>
+        function validarArchivo() {
+            const archivo = document.querySelector('input[type="file"]').files[0];
+            const maxSize = 2 * 1024 * 1024; // 2 MB
+
+            if (!archivo) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se ha seleccionado ningún archivo.'
+                });
+                return false; // Evita el envío del formulario
+            }
+
+            if (archivo.size > maxSize) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'El archivo es demasiado grande. El tamaño máximo permitido es de 2 MB.'
+                });
+                return false; // Evita el envío del formulario
+            }
+
+            return true; // Permite el envío del formulario si todo está bien
+        }
+
+        // Ejecutar una vez que la página esté completamente cargada
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const success = urlParams.get('success');
+            const error = urlParams.get('error');
+            const mensajeError = urlParams.get('mensaje');
+            const cotizacionId = urlParams.get('cotizacionid');
+
+            if (success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: 'El archivo ha sido subido correctamente.'
+                }).then(function() {
+                    // Redirecciona a otra página después de cerrar el alert
+                    window.location.href = `/documentos/${cotizacionId}`;  // Cambia a la página de destino
+                });
+            }
+
+            if (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: mensajeError || 'Hubo un problema al subir el archivo. Por favor, inténtalo nuevamente.'
+                });
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!-- 
+Archivo: /D:/Users/USER/Documents/GitHub/CotizacionSoftware/templates/index.html
+
+Descripción:
+Este archivo es la plantilla principal del portal de gestión. Contiene la estructura básica de una página HTML con elementos como encabezado, contenido principal y pie de página. También incluye enlaces a diferentes secciones del portal.
+
+Elementos principales:
+- Encabezado: Contiene el logotipo y el título del portal.
+- Contenido principal: Contiene dos secciones principales: "Cotizaciones" y "Manejo de Datos". Cada sección tiene un título, una descripción y enlaces relacionados.
+- Pie de página: Contiene un enlace para contactar al soporte técnico.
+
+Uso:
+Este archivo se utiliza como plantilla para crear páginas del portal de gestión. Se puede personalizar modificando el contenido de las secciones, agregando nuevos enlaces o elementos adicionales.
+
+Notas:
+- Se requiere tener los archivos "styles.css" y "logobonito.png" en la carpeta "static" para que los estilos y la imagen se muestren correctamente.
+- Los enlaces "/usuario_cotizacion", "/lista_cotizaciones", "/agregar_datos" y "/manejo_datos" deben estar configurados correctamente en el servidor para que funcionen correctamente.
+- El enlace "#support" en el pie de página debe ser reemplazado por el enlace real para contactar al soporte técnico.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Gestión IPB SAS</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <header>
+        <img src="static/logobonito.png" alt="Logo" class="logo">
+        <h1>Sistema de Cotizaciones V1</h1>
+    </header>
+    <main>
+        <div class="container">
+            <div class="section">
+                <h2>Cotizaciones</h2>
+                <p>Gestiona tus cotizaciones: crea nuevas y revisa el historial.</p>
+                <a href="/usuario_cotizacion" class="btn">Crear Cotización</a>
+                <a href="/lista_cotizaciones" class="btn">Historial de Cotizaciones</a>
+            </div>
+            <div class="section">
+                <h2>Manejo de Datos</h2>
+                <p>Accede a la documentación interna y recursos de la empresa.</p>
+                <a href=/subir_archivo method="post" class="btn">Subir Documentos</a>
+                <a href="/lista_proyectos" method="post" class="btn">Acceder Documentos</a>
+            </div>
+            <!-- Sección de Clientes -->
+            <div class="section">
+                <h2>Clientes</h2>
+                <p>Consulta y gestiona la información de tus clientes almacenada en el servidor.</p>
+                <a href="/lista_clientes" class="btn">Lista de Clientes</a>
+                <a href="/añadir_cliente" class="btn">Añadir Cliente</a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="support-section">
+            <a href="/soporte" class="support-link">Contactar Soporte</a>
+        </div>
+    </footer>
+</body>
+</html>
+

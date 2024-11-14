@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Cotización</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <script>
+        function validarFormulario(event) {
+            // Obtener los valores de los campos
+            const ciudad = document.getElementById('ciudad').value;
+            const empresa = document.getElementById('empresa_cliente_nombre').value;
+            const plazo = document.getElementById('plazo_oferta').value;
+            const entrega = document.getElementById('tiempo_entrega').value;
+            const anticipo = document.getElementById('porcentaje_anticipo').value;
+            const primeraActa = document.getElementById('porcentaje_primera_acta').value;
+            const actaFinal = document.getElementById('porcentaje_acta_final').value;
+    
+            // Validar que ciudad y empresa sean strings
+            if (!isNaN(ciudad)) {
+                alert("El campo Ciudad debe ser texto.");
+                event.preventDefault();
+                return;
+            }
+            if (!isNaN(empresa)) {
+                alert("El campo Nombre de la Empresa debe ser texto.");
+                event.preventDefault();
+                return;
+            }
+    
+            // Validar que los campos "Plazo de la Oferta" y "Tiempo de Entrega" sean cadenas de texto no vacías
+            if (!plazo.trim()) {
+                alert("El campo Plazo de la Oferta no puede estar vacío y debe ser texto.");
+                event.preventDefault();
+                return;
+            }
+            if (!entrega.trim()) {
+                alert("El campo Tiempo de Entrega no puede estar vacío y debe ser texto.");
+                event.preventDefault();
+                return;
+            }
+    
+            // Validar que los campos de porcentajes sean números enteros
+            if (isNaN(anticipo) || isNaN(primeraActa) || isNaN(actaFinal)) {
+                alert("Los campos Porcentaje de Anticipo, Primera Acta y Acta Final deben ser números enteros.");
+                event.preventDefault();
+                return;
+            }
+    
+            // Si todo es válido, permitir el envío del formulario
+        }
+    </script>
+    
+</head>
+<body>
+    <div class="modify-quote-container">
+        <h1>Modificar Cotización {{ cotizacion.id }}</h1>
+
+        <form action="{{ url_for('actualizar_cotizacion', id=cotizacion.id) }}" method="POST" onsubmit="validarFormulario(event)">
+<!-- Campos comunes que siempre se muestran -->
+            <div class="form-group">
+                <label for="ciudad">Ciudad</label>
+                <input type="text" id="ciudad" name="ciudad" value="{{ cotizacion.ciudad }}" required>
+            </div>
+            <div class="form-group">
+                <label for="empresa_cliente_nombre">Nombre de la Empresa</label>
+                <input type="text" id="empresa_cliente_nombre" name="empresa_cliente_nombre" value="{{ cotizacion.empresa }}" required>
+            </div>
+            <div class="form-group">
+                <label for="nombre_proyecto">Nombre del Proyecto</label>
+                <input type="text" id="nombre_proyecto" name="nombre_proyecto" value="{{ cotizacion.proyecto }}" required>
+            </div>
+            <div class="form-group">
+                <label for="plazo_oferta">Plazo de la Oferta</label>
+                <input type="text" id="plazo_oferta" name="plazo_oferta" value="{{ cotizacion.plazo }}" required>
+            </div>
+            <div class="form-group">
+                <label for="tiempo_entrega">Tiempo de Entrega</label>
+                <input type="text" id="tiempo_entrega" name="tiempo_entrega" value="{{ cotizacion.entrega }}" required>
+            </div>
+            <div class="form-group">
+                <label for="porcentaje_anticipo">Porcentaje de Anticipo</label>
+                <input type="number" id="porcentaje_anticipo" name="porcentaje_anticipo" value="{{ cotizacion.anticipo }}" required>
+            </div>
+            <div class="form-group">
+                <label for="porcentaje_primera_acta">Porcentaje Primera Acta</label>
+                <input type="number" id="porcentaje_primera_acta" name="porcentaje_primera_acta" value="{{ cotizacion.p_acta }}" required>
+            </div>
+            <div class="form-group">
+                <label for="porcentaje_acta_final">Porcentaje Acta Final</label>
+                <input type="number" id="porcentaje_acta_final" name="porcentaje_acta_final" value="{{ cotizacion.f_acta }}" required>
+            </div>
+
+            <button type="submit" class="btn">Continuar</button>
+        </form>
+
+        <a href="{{ url_for('ver_cotizacion', id=cotizacion.id) }}">Volver a ver cotización</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Económica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 70px;
+            margin-top: 20px;
+            font-size: 32px;
+            line-height: 1.5; /* Ajusta el valor para aumentar o disminuir el espacio */
+        }
+        .header {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .header img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .content {
+            margin-bottom: 40px;
+        }
+        .signature {
+            text-align: left;
+            margin-top: 60px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Estilos para los botones */
+        button {
+            background-color: #4CAF50; /* Verde */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px; /* Bordes redondeados */
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Color al pasar el mouse */
+        }
+
+
+        footer {
+            background-color: #f17d2f; 
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Contenido principal -->
+<div class="content">
+    <div class="content">
+
+        {% set meses = {
+            1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril', 5: 'Mayo',
+            6: 'Junio', 7: 'Julio', 8: 'Agosto', 9: 'Septiembre',
+            10: 'Octubre', 11: 'Noviembre', 12: 'Diciembre'
+        } %}
+
+        <div class="header" style="position: relative;">
+            <img src="{{ url_for('static', filename='encabezado.png') }}" alt="Encabezado" />
+            <p style="position: absolute; right: 0; top: 140px;">Toluca, México a {{ cotizacion.fecha.strftime('%d') }} de {{ meses[cotizacion.fecha.month] }} del {{ cotizacion.fecha.strftime('%Y') }}</p>
+            <p style="position: absolute; right: 0; top: 200px;""><strong>COT N&deg;{{ cotizacion.consecutivo }}</strong></p>
+            <p style="font-size: 0.9em; position: absolute; right: 30px; top: 300px;"">
+                Home Services S.A de C.V                            <br>
+                RFC: XAXX010101000             
+            </p>
+            </div>          
+
+        <br><br><br>
+        <p>
+                {{ cotizacion.empresa }}                        <br>  
+                Nombre: {{ cotizacion.cliente.nombre }}         <br> 
+        </p>
+
+    <p>Cotización: <strong>{{ cotizacion.proyecto }}</strong>                               <br> <br>
+        Se adjunta propuesta econ&oacute;mica del servicio ofrecido por nuestra empresa:
+    </p>
+   
+    <p style="text-align: center;"><strong>DESGLOSE</strong></p>
+    
+    <!-- Tabla para mostrar los componentes -->
+    <table>
+        {% if cotizacion.servicio != "v" %}
+            <tbody>
+                <tr>
+                    <td colspan="6">{{ cotizacion.servicio }}</td>
+                </tr>
+            </tbody>
+        {% else %}
+            <thead>
+                <tr>
+                    <th>Concepto</th>
+                    <th>Cantidad</th>
+                    <th>Unidad</th>
+                    <th>Valor Unitario</th>
+                    <th>IVA</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detalle in cotizacion.productos_detalle %}
+                    <tr>
+                        <td>{{ detalle.producto.nombre }}</td>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td>{{ detalle.tamano }}</td>
+                        <td>{{ (detalle.producto.precio * detalle.tamano) | round(2) }}</td>
+                        <td>{{ (detalle.producto.precio * detalle.cantidad * detalle.tamano * 0.19) | round(2) }}</td>
+                        <td>{{ (detalle.producto.precio * detalle.cantidad * detalle.tamano * 1.19) | round(2) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        {% endif %}
+    </table>
+
+    <p style="font-size: 0.8em;">
+        <strong>Notas Adjuntas:</strong><br>
+        - El pago total debe realizarse dentro de los 15 días siguientes a la aceptación de esta cotización. Se aceptan transferencias bancarias y pagos en efectivo.                                             <br>
+        - Esta cotización es válida hasta 15 días después de la generación de la misma. Después de esta fecha, los precios pueden estar sujetos a cambios.                                                        <br>
+        - Todos los servicios están garantizados por un período de 6 meses. Si surge algún problema relacionado con la instalación, estaremos encantados de atenderlo sin costo adicional durante este período.   <br>
+        - Se recomienda que un representante de la empresa esté presente el día de la instalación para asegurar que todos los requisitos se cumplan adecuadamente.                                                <br>
+    </p>
+    
+    <p>
+        Plazo de la oferta: <strong>{{ cotizacion.plazo }}</strong>                            <br>
+        Tiempo de entrega:  <strong>{{ cotizacion.entrega }} días hábiles</strong>             <br><br>
+        Pago acordado:                                                                         <br>
+        <strong>
+        - Anticipo del {{ cotizacion.anticipo }}%                                              <br>
+        - Pago del {{ cotizacion.p_acta }}% primer avance entregado de la obra.                <br>
+        - Pago del {{ cotizacion.f_acta }}% con la entrega final.                              <br>       
+         </strong>
+    </p>
+</div>
+
+<!-- Firma -->
+<div class="signature">
+        <p>
+            Atentamente,  <br>
+            José Luis Castro <br>
+            Home Services<br>
+            Rancho Seco Manzana 007, 52176 San Salvador Tizatlalli, Méx.<br>
+            Telefono: +527223136549<br>
+
+        </p>
+    </div>
+<footer>
+    <center>
+        <a href="/" class="support-link">Volver al Inicio</a>
+    </center>
+</footer>
+
+</body>
+</html>

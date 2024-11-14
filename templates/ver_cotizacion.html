@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Económica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 70px;
+            margin-top: 20px;
+            font-size: 32px;
+            line-height: 1.5; /* Ajusta el valor para aumentar o disminuir el espacio */
+        }
+        .header {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .header img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .content {
+            margin-bottom: 40px;
+        }
+        .signature {
+            text-align: left;
+            margin-top: 60px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Estilos para los botones */
+        button {
+            background-color: #4CAF50; /* Verde */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px; /* Bordes redondeados */
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Color al pasar el mouse */
+        }
+
+
+        footer {
+            background-color: #f17d2f; 
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Contenido principal -->
+<div class="content">
+    <div class="content">
+
+        {% set meses = {
+            1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril', 5: 'Mayo',
+            6: 'Junio', 7: 'Julio', 8: 'Agosto', 9: 'Septiembre',
+            10: 'Octubre', 11: 'Noviembre', 12: 'Diciembre'
+        } %}
+
+        <div class="header" style="position: relative;">
+            <img src="{{ url_for('static', filename='encabezado.png') }}" alt="Encabezado" />
+            <p style="position: absolute; right: 0; top: 140px;">Toluca, México a {{ cotizacion.fecha.strftime('%d') }} de {{ meses[cotizacion.fecha.month] }} del {{ cotizacion.fecha.strftime('%Y') }}</p>
+            <p style="position: absolute; right: 0; top: 200px;""><strong>COT N&deg;{{ cotizacion.consecutivo }}</strong></p>
+            <p style="font-size: 0.9em; position: absolute; right: 30px; top: 300px;"">
+                Home Services S.A de C.V                            <br>
+                RFC: XAXX010101000             
+            </p>
+            </div>          
+
+        <br><br><br>
+        <p>
+                {{ cotizacion.empresa }}                        <br>  
+                Nombre: {{ cotizacion.cliente.nombre }}         <br> 
+        </p>
+
+    <p>Cotización: <strong>{{ cotizacion.proyecto }}</strong>                               <br> <br>
+        Se adjunta propuesta econ&oacute;mica del servicio ofrecido por nuestra empresa:
+    </p>
+   
+    <p style="text-align: center;"><strong>DESGLOSE</strong></p>
+    
+    <!-- Tabla para mostrar los componentes -->
+    <table>
+        {% if cotizacion.servicio != "v" %}
+            <tbody>
+                <tr>
+                    <td colspan="6">{{ cotizacion.servicio }}</td>
+                </tr>
+            </tbody>
+        {% else %}
+            <thead>
+                <tr>
+                    <th>Concepto</th>
+                    <th>Cantidad</th>
+                    <th>Unidad</th>
+                    <th>Valor Unitario</th>
+                    <th>IVA</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detalle in cotizacion.productos_detalle %}
+                    <tr>
+                        <td>{{ detalle.producto.nombre }}</td>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td>{{ detalle.tamano }}</td>
+                        <td>{{ (detalle.producto.precio * detalle.tamano) | round(2) }}</td>
+                        <td>{{ (detalle.producto.precio * detalle.cantidad * detalle.tamano * 0.19) | round(2) }}</td>
+                        <td>{{ (detalle.producto.precio * detalle.cantidad * detalle.tamano * 1.19) | round(2) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        {% endif %}
+    </table>
+
+    <p style="font-size: 0.8em;">
+        <strong>Notas Adjuntas:</strong><br>
+        - El pago total debe realizarse dentro de los 15 días siguientes a la aceptación de esta cotización. Se aceptan transferencias bancarias y pagos en efectivo.                                             <br>
+        - Esta cotización es válida hasta 15 días después de la generación de la misma. Después de esta fecha, los precios pueden estar sujetos a cambios.                                                        <br>
+        - Todos los servicios están garantizados por un período de 6 meses. Si surge algún problema relacionado con la instalación, estaremos encantados de atenderlo sin costo adicional durante este período.   <br>
+        - Se recomienda que un representante de la empresa esté presente el día de la instalación para asegurar que todos los requisitos se cumplan adecuadamente.                                                <br>
+    </p>
+    
+    <p>
+        Plazo de la oferta: <strong>{{ cotizacion.plazo }}</strong>                            <br>
+        Tiempo de entrega:  <strong>{{ cotizacion.entrega }} días hábiles</strong>             <br><br>
+        Pago acordado:                                                                         <br>
+        <strong>
+        - Anticipo del {{ cotizacion.anticipo }}%                                              <br>
+        - Pago del {{ cotizacion.p_acta }}% primer avance entregado de la obra.                <br>
+        - Pago del {{ cotizacion.f_acta }}% con la entrega final.                              <br>       
+         </strong>
+    </p>
+</div>
+
+<!-- Firma -->
+<div class="signature">
+        <p>
+            Atentamente,  <br>
+            José Luis Castro <br>
+            Home Services<br>
+            Rancho Seco Manzana 007, 52176 San Salvador Tizatlalli, Méx.<br>
+            Telefono: +527223136549<br>
+
+        </p>
+    </div>
+
+
+<form action="{{ url_for('modificar_cotizacion', id=cotizacion.id) }}" method="POST">
+    <!-- Botón para editar la cotización -->
+    <button type="submit">Editar Cotización</button>
+    <!-- Botones de exportación -->
+
+</form>
+
+<button onclick="exportToPDF()">Exportar a PDF</button>
+<button onclick="exportToExcel()">Exportar a Excel</button>
+<button onclick="exportToPNG()">Exportar a PNG</button>
+
+
+<!-- Enlace para volver a la lista de cotizaciones -->
+<footer>
+    <a href="{{ url_for('listar_cotizaciones') }}" class="btn">Volver a cotizaciones</a>
+</footer>
+
+<script>
+    function exportToPDF() {
+        const { jsPDF } = window.jspdf;
+        html2canvas(document.body).then(function(canvas) {
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = 210; // Ancho de la página A4 en mm
+            const pageHeight = 297; // Altura de la página A4 en mm
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            doc.save('cotizacion.pdf');
+        });
+    }
+
+    function exportToExcel() {
+    // Crear un nuevo libro de Excel
+    var wb = XLSX.utils.book_new();
+
+    // Seleccionar la tabla que contiene los datos
+    var table = document.querySelector('table');
+
+    // Asegurarse de que la tabla contiene datos
+    if (!table) {
+        alert('No hay datos para exportar.');
+        return;
+    }
+
+    // Crear un array para almacenar los datos de la tabla
+    var data = [];
+
+    // Recorrer todas las filas de la tabla
+    var rows = table.querySelectorAll('tr');
+    rows.forEach(row => {
+        var rowData = [];
+        // Recorrer todas las celdas de la fila
+        var cells = row.querySelectorAll('th, td');
+        cells.forEach(cell => {
+            rowData.push(cell.innerText.trim()); // Obtener el texto de la celda y eliminar espacios en blanco
+        });
+        data.push(rowData);
+    });
+
+    // Convertir el array de datos a una hoja de Excel
+    var ws = XLSX.utils.aoa_to_sheet(data);
+
+    // Agregar la hoja de Excel al libro
+    XLSX.utils.book_append_sheet(wb, ws, "Cotización");
+
+    // Guardar el archivo Excel
+    XLSX.writeFile(wb, 'cotizacion.xlsx');
+}
+
+
+    function exportToPNG() {
+        html2canvas(document.body).then(function(canvas) {
+            let link = document.createElement('a');
+            link.href = canvas.toDataURL();
+            link.download = 'cotizacion.png';
+            link.click();
+        });
+    }
+</script>
+</body>
+</html>
